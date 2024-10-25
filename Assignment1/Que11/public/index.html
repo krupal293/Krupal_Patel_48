@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <script src="./js/bootstrap.bundle.js" defer></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container my-4">
+        <h2 class="my-4">Cricket Score</h2>
+        <div class="d-flex justify-content-around">
+            <div class="row">
+
+                <div class="card text mb-3">
+                    <div class="card-header" id="card-header1"></div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="card-title1"></h5>
+                        <p class="card-text">
+                        <div id="batting-team1"></div>
+                        <div id="match-score1"></div>
+
+                        </p>
+                    </div>
+                </div>
+                <div class="card text mb-3">
+                    <div class="card-header" id="card-header2"></div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="card-title2"></h5>
+                        <p class="card-text">
+                        <div id="batting-team2"></div>
+                        <div id="match-score2"></div>
+
+                        </p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-header" id="card-header3"></div>
+                    <div class="card-body">
+                        <h5 class="card-title" id="card-title3"></h5>
+                        <p class="card-text">
+                        <div id="batting-team3"></div>
+                        <div id="match-score3"></div>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const ws = new WebSocket("ws://localhost:3300");
+    ws.addEventListener("message", (msg) => {
+        let res = JSON.parse(msg.data);
+        console.log(res);
+        let match = res[1];
+        document.getElementById("card-header1").innerText = match.name;
+        document.getElementById("card-title1").innerText = match.status;
+        document.getElementById("batting-team1").innerText = match.score[0].inning;
+        document.getElementById("match-score1").innerText = match.score[0].r + '/' + res[0].score[1].w + ' Over : ' + res[0].score[1].o;
+
+        let match2 = res[2];
+        document.getElementById("card-header2").innerText = match2.name;
+        document.getElementById("card-title2").innerText = match2.status;
+        document.getElementById("batting-team2").innerText = match2.score[0].inning;
+        document.getElementById("match-score2").innerText = match2.score[0].r + '/' + res[0].score[1].w + ' Over : ' + res[0].score[1].o;
+
+        let match3 = res[3];
+        document.getElementById("card-header3").innerText = match3.name;
+        document.getElementById("card-title3").innerText = match3.status;
+        document.getElementById("batting-team3").innerText = match3.score[0].inning;
+        document.getElementById("match-score3").innerText = match3.score[0].r + '/' + res[0].score[1].w + ' Over : ' + res[0].score[1].o;
+    })
+
+</script>
+
+</html>
